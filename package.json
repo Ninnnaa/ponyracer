@@ -7,7 +7,10 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "ng2ninja": "ng2ninja",
+    "format": "prettier --write --single-quote --print-width 140 --arrow-parens avoid --trailing-comma none \"{src,e2e}/**/*.+(ts|js|json|html|css)\"",
+    "postinstall": "npm run format"
   },
   "private": true,
   "dependencies": {
@@ -19,6 +22,14 @@
     "@angular/platform-browser": "~11.1.0",
     "@angular/platform-browser-dynamic": "~11.1.0",
     "@angular/router": "~11.1.0",
+    "bootstrap": "4.6.0",
+    "date-fns": "2.16.1",
+    "font-awesome": "4.7.0",
+    "format": "^0.2.2",
+    "karma-firefox-launcher": "^2.1.0",
+    "karma-json-reporter": "^1.2.1",
+    "ng2ninja": "^2.0.1",
+    "postinstall": "^0.7.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"

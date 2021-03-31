@@ -93,7 +93,12 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "codeCoverageExclude": [
+              "**/models/*.ts",
+              "**/app.module.ts",
+              "**/app.routes.ts"
+            ]
           }
         },
         "lint": {

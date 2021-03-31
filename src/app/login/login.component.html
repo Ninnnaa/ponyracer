@@ -1,0 +1,17 @@
+<h1> Log In</h1>
+<div class="form-group">
+    <form (ngSubmit)="authenticate()" #loginForm="ngForm">
+        <div class="container-fluid">
+            <label class="label">Log In</label>
+            <input name = "login" class="input--style-4" [(ngModel)]="credentials.login" required>
+            <div *ngIf="loginForm.dirty && loginForm.hasError('required')">Login is required</div>
+            <label class="label">Password</label>
+            <input name = "password" type="password" class="input--style-4"[(ngModel)]="credentials.password" required><br>
+            <button class="btn btn-large btn-danger" type="submit" [disabled]="loginForm.invalid" >Log In</button>
+        </div>
+    </form>
+
+    <div *ngIf="loginFailed">
+        <p id="invalid-year-error">Wrong login or password</p>
+    </div>
+</div>
