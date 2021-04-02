@@ -30,7 +30,6 @@ export class MenuComponent implements OnInit, OnDestroy {
         }
     }
     logout(): void {
-
         this.userService.logout();
     }
 
