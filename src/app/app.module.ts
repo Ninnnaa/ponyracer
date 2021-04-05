@@ -17,6 +17,7 @@ import { HasErrorDirective } from '../directives/has-error.directive';
 import { LoginComponent } from './login/login.component';
 import { FocusDirective } from './focus.directive';
 import { JwtInterceptor } from './jwt.interceptor';
+import { BetComponent } from './bet/bet.component';
 
 @NgModule({
     declarations: [
@@ -31,6 +32,7 @@ import { JwtInterceptor } from './jwt.interceptor';
         HasErrorDirective,
         LoginComponent,
         FocusDirective,
+        BetComponent,
     ],
     imports: [
         BrowserModule,
