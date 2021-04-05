@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { ROUTES } from './app.routes';
@@ -16,6 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HasErrorDirective } from '../directives/has-error.directive';
 import { LoginComponent } from './login/login.component';
 import { FocusDirective } from './focus.directive';
+import { JwtInterceptor } from './jwt.interceptor';
 
 @NgModule({
     declarations: [
@@ -39,7 +40,7 @@ import { FocusDirective } from './focus.directive';
         FormsModule,
     ],
     bootstrap: [AppComponent],
-    providers: [
+    providers: [ { provide: HTTP_INTERCEPTORS, useExisting: JwtInterceptor, multi: true }
     ]
 })
 export class AppModule {
