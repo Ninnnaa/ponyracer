@@ -1,10 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor
-} from '@angular/common/http';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -21,12 +16,9 @@ export class JwtInterceptor implements HttpInterceptor {
         return next.handle(request);
     }
 
-    setJwtToken(token: string): void {
-
-    }
+    setJwtToken(token: string): void {}
 
     removeJwtToken(): void {
         this.token = null;
     }
-
 }

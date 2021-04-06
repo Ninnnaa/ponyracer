@@ -1,29 +1,30 @@
 <h2 class="card-title">Sign up!</h2>
 <div class="form-group">
-<form (ngSubmit)="register()" [formGroup]="form">
-    <div>
-        <label class="label">Log In</label>
-        <input class="input--style-4" name="login" formControlName="login" ngModel required minlength="3">
-        <div *ngIf="form.controls.login.dirty && form.controls.login.hasError('required')">Login is required</div>
-        <div *ngIf="form.controls.login.dirty && form.controls.login.hasError('minlength')">Login should have at least 3 caracters</div>
-    </div>
-    <div>
-        <label class="label">Password</label>
-        <input class="input--style-4" type="password" name="password" formControlName="password" ngModel required>
-        <div *ngIf="form.controls.password.dirty && form.controls.password.hasError('required')">Password is required</div>
-    </div>
-    <div>
-        <label class="label"> Confirm Password</label>
-        <input class="input--style-4" type="password" name="password" formControlName="confirm" ngModel required>
-        <div *ngIf="form.controls.confirm.dirty && form.controls.confirm.errors">{{'Password is not the same'}}</div>
-    </div>
-    <div>
-        <label class="label">Born Year</label>
-        <input class="input--style-4" name="birthday" formControlName="birthday">
-        <div [prHasError]="!!form.get('birthday')?.errors">Year is not valid </div>
-    </div> <br>
-    <button class="btn btn-large btn-danger" type="submit" [disabled]="form.invalid">Register</button>
-</form>
+    <form (ngSubmit)="register()" [formGroup]="form">
+        <div>
+            <label class="label">Log In</label>
+            <input class="input--style-4" name="login" formControlName="login" ngModel required minlength="3" />
+            <div *ngIf="form.controls.login.dirty && form.controls.login.hasError('required')">Login is required</div>
+            <div *ngIf="form.controls.login.dirty && form.controls.login.hasError('minlength')">Login should have at least 3 caracters</div>
+        </div>
+        <div>
+            <label class="label">Password</label>
+            <input class="input--style-4" type="password" name="password" formControlName="password" ngModel required />
+            <div *ngIf="form.controls.password.dirty && form.controls.password.hasError('required')">Password is required</div>
+        </div>
+        <div>
+            <label class="label"> Confirm Password</label>
+            <input class="input--style-4" type="password" name="password" formControlName="confirm" ngModel required />
+            <div *ngIf="form.controls.confirm.dirty && form.controls.confirm.errors">{{ 'Password is not the same' }}</div>
+        </div>
+        <div>
+            <label class="label">Born Year</label>
+            <input class="input--style-4" name="birthday" formControlName="birthday" />
+            <div [prHasError]="!!form.get('birthday')?.errors">Year is not valid</div>
+        </div>
+        <br />
+        <button class="btn btn-large btn-danger" type="submit" [disabled]="form.invalid">Register</button>
+    </form>
     <div *ngIf="registrationFailed">
         <p id="invalid-year-error">Try another login</p>
     </div>

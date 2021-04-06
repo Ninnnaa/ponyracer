@@ -4,13 +4,9 @@ import { Directive, ElementRef, Input, OnChanges, Renderer2, SimpleChanges } fro
     selector: '[prHasError]'
 })
 export class HasErrorDirective implements OnChanges {
+    @Input() prHasError: boolean | undefined | '' = undefined;
 
-    @Input() prHasError: boolean|undefined|'' = undefined;
-
-    constructor(
-        private el: ElementRef,
-        private renderer: Renderer2,
-    ) {
+    constructor(private el: ElementRef, private renderer: Renderer2) {
         this.detectError();
     }
 

@@ -18,6 +18,7 @@ import { LoginComponent } from './login/login.component';
 import { FocusDirective } from './focus.directive';
 import { JwtInterceptor } from './jwt.interceptor';
 import { BetComponent } from './bet/bet.component';
+import { LiveComponent } from './live/live.component';
 
 @NgModule({
     declarations: [
@@ -33,17 +34,10 @@ import { BetComponent } from './bet/bet.component';
         LoginComponent,
         FocusDirective,
         BetComponent,
+        LiveComponent
     ],
-    imports: [
-        BrowserModule,
-        HttpClientModule,
-        RouterModule.forRoot(ROUTES),
-        ReactiveFormsModule,
-        FormsModule,
-    ],
+    imports: [BrowserModule, HttpClientModule, RouterModule.forRoot(ROUTES), ReactiveFormsModule, FormsModule],
     bootstrap: [AppComponent],
-    providers: [ { provide: HTTP_INTERCEPTORS, useExisting: JwtInterceptor, multi: true }
-    ]
+    providers: [{ provide: HTTP_INTERCEPTORS, useExisting: JwtInterceptor, multi: true }]
 })
-export class AppModule {
-}
+export class AppModule {}
