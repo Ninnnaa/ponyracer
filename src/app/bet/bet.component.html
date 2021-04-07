@@ -1,6 +1,7 @@
 
 <div *ngIf="raceModel">
     <h1>{{ raceModel.name }}</h1>
+    <p class="text-success"> The race will start at :{{ raceModel.startInstant}}</p>
     <button class="btn btn-danger" [routerLink]="['/races', raceModel.id, 'live']">Watch Live</button>
     <div *ngIf="betFailed" class="text-danger">
         <a (click)="betFailed = false"></a>
@@ -13,5 +14,4 @@
             <pr-pony [ponyModel]="pony" (ponyClicked)="betOnPony(pony)"></pr-pony>
         </div>
     </div>
-    <p>{{ raceModel.startInstant}}</p>
 </div>
