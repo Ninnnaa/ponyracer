@@ -3,8 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { RaceService } from '../race.service';
 import { RaceModel } from '../models/race.model';
 import {PonyWithPositionModel} from '../models/pony.model';
-import { Subscription } from 'rxjs';
-import { filter, tap, switchMap } from 'rxjs/operators';
+import { Subject, Subscription, EMPTY, interval } from 'rxjs';
+import { filter, tap, switchMap, groupBy, mergeMap, bufferToggle, throttleTime, map, catchError } from 'rxjs/operators';
 
 @Component({
     selector: 'pr-live',
@@ -13,17 +13,17 @@ import { filter, tap, switchMap } from 'rxjs/operators';
 })
 export class LiveComponent implements OnInit, OnDestroy{
     raceModel: RaceModel;
-    poniesWithPosition: Array<PonyWithPositionModel>;
+    poniesWithPosition: Array<PonyWithPositionModel> = [];
     positionSubscription: Subscription;
     error: boolean;
     winners: Array<PonyWithPositionModel>;
+    clickSubject = new Subject<PonyWithPositionModel>();
     betWon: boolean;
 
     constructor(private raceService: RaceService, private route: ActivatedRoute) {}
 
     ngOnInit(): void {
         const id = +this.route.snapshot.paramMap.get('raceId');
-        this.raceService.get(id).subscribe(race => (this.raceModel = race));
         this.positionSubscription = this.raceService.get(id)// call the raceService.get(id) method to return an observable
             .pipe(tap((race: RaceModel) => (this.raceModel = race)), // store the emitted race in the raceModel with tap
                 filter(race => this.raceModel.status !== 'FINISHED'), // emit the race if status is different from 'FINISHED'
@@ -40,11 +40,33 @@ export class LiveComponent implements OnInit, OnDestroy{
                     this.betWon = this.winners.some(pony => pony.id === this.raceModel.betPonyId);
                 }
             });
+        this.clickSubject // click on pony to support him
+            .pipe(
+                groupBy( // transform one observable in 5
+                    pony => pony.id,
+                    pony => pony.id
+                ),
+                mergeMap(obs => obs.pipe(bufferToggle(obs, () => interval(1000)))), // grouping in array clicks
+                filter(array => array.length >= 1),
+                throttleTime(1000),
+                map(array => array[0]),
+                switchMap(ponyId => this.raceService.boost(this.raceModel.id, ponyId).pipe(catchError(() => EMPTY))),
+            )
+            .subscribe(() => {
+            }); // if dont need return value of boost can write like this
     }
 
     ngOnDestroy(): void {
         if (this.positionSubscription) {
             this.positionSubscription.unsubscribe();
         }
+    }
+
+    onClick(pony: PonyWithPositionModel): void {
+        this.clickSubject.next(pony);
+    }
+
+    ponyById(index: number, pony: PonyWithPositionModel): number {
+        return pony.id;
     }
 }
