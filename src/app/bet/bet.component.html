@@ -2,7 +2,7 @@
 <h1>{{ raceModel?.name }}</h1>
     <p class="text-success"> The race will start at :{{ raceModel?.startInstant}}</p>
     <button class="btn btn-danger" [routerLink]="['/races', raceModel?.id, 'live']">Watch Live</button>
-<pr-alert *ngIf="betFailed" type="danger" (closed)="betFailed = false"> The race is already started or finished</pr-alert>
+<ngb-alert *ngIf="betFailed" type="danger" (closed)="betFailed = false"> The race is already started or finished</ngb-alert>
 
     <div class="d-flex justify-content-center">Click to bet on your favorite pony</div>
     <div class="d-flex justify-content-center">
