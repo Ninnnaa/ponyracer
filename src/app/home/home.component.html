@@ -3,7 +3,7 @@
 </div>
 
 <div *ngIf="!user; else loginFirst" class="text-center">
-    <button class="btn btn-large btn-danger" routerLink="/register">Register</button> <br /><br />
-    <button class="btn btn-large btn-danger" routerLink="/login">Log In</button>
+    <button class="btn btn-large btn-danger" routerLink="/users/register">Register</button> <br /><br />
+    <button class="btn btn-large btn-danger" routerLink="/users/login">Log In</button>
 </div>
 <ng-template #loginFirst><button class="btn btn-large btn-danger" routerLink="/races">races</button></ng-template>

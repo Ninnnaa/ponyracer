@@ -1,5 +1,6 @@
 export interface UserModel {
-    token: string;
+    id: number;
+    token?: string;
     login: string;
     password: string;
     birthday: number;

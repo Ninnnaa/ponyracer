@@ -1,4 +1,5 @@
 <h2 class="card-title">Sign up!</h2>
+<pr-alert *ngIf="registrationFailed" type="danger" (closed)="registrationFailed = false">Try again with another login.</pr-alert>
 <div class="form-group">
     <form (ngSubmit)="register()" [formGroup]="form">
         <div>
@@ -17,11 +18,11 @@
             <input class="input--style-4" type="password" name="password" formControlName="confirm" ngModel required />
             <div *ngIf="form.controls.confirm.dirty && form.controls.confirm.errors">{{ 'Password is not the same' }}</div>
         </div>
-        <div>
-            <label class="label">Born Year</label>
-            <input class="input--style-4" name="birthday" formControlName="birthday" />
-            <div [prHasError]="!!form.get('birthday')?.errors">Year is not valid</div>
-        </div>
+<!--        <div>-->
+<!--            <label class="label">Born Year</label>-->
+<!--            <input class="input&#45;&#45;style-4" name="birthday" formControlName="birthday" />-->
+<!--            <div [prHasError]="!!form.get('birthday').errors">Year is not valid</div>-->
+<!--        </div>-->
         <br />
         <button class="btn btn-large btn-danger" type="submit" [disabled]="form.invalid">Register</button>
     </form>

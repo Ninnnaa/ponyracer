@@ -5,15 +5,15 @@ import { UserModel } from './models/user.model';
 import { tap } from 'rxjs/operators';
 import { environment } from '../environments/environment';
 import { JwtInterceptor } from './jwt.interceptor';
+import { WsService } from './ws.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class UserService {
-    // @ts-ignore
-    userEvents = new BehaviorSubject<UserModel>();
+    userEvents = new BehaviorSubject<UserModel>(undefined);
 
-    constructor(private http: HttpClient, private jwtInterceptor: JwtInterceptor) {
+    constructor(private http: HttpClient, private jwtInterceptor: JwtInterceptor, private wsService: WsService) {
         this.retrieveUser();
     }
 
@@ -44,9 +44,15 @@ export class UserService {
     }
 
     logout(): void {
-        // @ts-ignore
         this.userEvents.next(null);
         window.localStorage.removeItem('rememberMe');
         this.jwtInterceptor.removeJwtToken();
+    }
+
+    scoreUpdates(userId: number): Observable<UserModel> {
+        return this.wsService.connect<UserModel>(`/player/${userId}`);
+    }
+    isLoggedIn(): boolean {
+        return !!window.localStorage.getItem('rememberMe');
     }
 }
