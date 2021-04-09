@@ -9,7 +9,7 @@ import { UserService } from '../user.service';
     styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, OnDestroy {
-    user?: UserModel;
+    user: UserModel;
     userEventsSubscription: Subscription | undefined;
 
     constructor(private userService: UserService) {}

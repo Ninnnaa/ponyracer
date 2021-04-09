@@ -1,40 +1,38 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { UserService } from '../user.service';
 import { UserModel } from '../models/user.model';
-import { Subscription, concat, of, EMPTY } from 'rxjs';
+import { Subscription, concat, of, EMPTY, Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { catchError, switchMap } from 'rxjs/operators';
+import { catchError, shareReplay, switchMap } from 'rxjs/operators';
 
 
 @Component({
     selector: 'pr-menu',
     templateUrl: './menu.component.html',
-    styleUrls: ['./menu.component.css']
+    styleUrls: ['./menu.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MenuComponent implements OnInit, OnDestroy {
+export class MenuComponent implements OnInit {
     navbarCollapsed = true;
-    user: UserModel;
-    userEventsSubscription: Subscription;
+    userEvents: Observable<UserModel>;
 
-    constructor(private userService: UserService, private router: Router) {}
+    constructor(private userService: UserService, private router: Router, private ref: ChangeDetectorRef) {}
 
     toggleNavbar(): void {
         this.navbarCollapsed = !this.navbarCollapsed;
     }
 
     ngOnInit(): void {
-        this.userEventsSubscription = this.userService.userEvents
-            .pipe(switchMap(user => (user ? concat(of(user),
-                this.userService.scoreUpdates(user.id).pipe(catchError(() => EMPTY))) : of(null))))
-            .subscribe(userWithScore => (this.user = userWithScore));
+        this.userEvents = this.userService.userEvents.pipe(
+            switchMap(user => (user ? concat(of(user), this.userService.scoreUpdates(user.id)
+                .pipe(catchError(() => EMPTY))) : of(null))),
+            shareReplay()
+        );
     }
 
-    ngOnDestroy(): void {
-        if (this.userEventsSubscription) {
-            this.userEventsSubscription?.unsubscribe();
-        }
-    }
-    logout(): void {
+    logout(event: Event): void {
+        event.preventDefault();
         this.userService.logout();
+        this.router.navigate(['/']);
     }
 }

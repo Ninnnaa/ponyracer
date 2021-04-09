@@ -6,6 +6,7 @@ import { tap } from 'rxjs/operators';
 import { environment } from '../environments/environment';
 import { JwtInterceptor } from './jwt.interceptor';
 import { WsService } from './ws.service';
+import { MoneyHistoryModel } from './models/money-history.model';
 
 @Injectable({
     providedIn: 'root'
@@ -54,5 +55,8 @@ export class UserService {
     }
     isLoggedIn(): boolean {
         return !!window.localStorage.getItem('rememberMe');
+    }
+    getMoneyHistory(): Observable<Array<MoneyHistoryModel>> {
+        return this.http.get<Array<MoneyHistoryModel>>(`${environment.baseUrl}/api/money/history`);
     }
 }

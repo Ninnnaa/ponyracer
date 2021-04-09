@@ -16,7 +16,9 @@ export class JwtInterceptor implements HttpInterceptor {
         return next.handle(request);
     }
 
-    setJwtToken(token: string): void {}
+    setJwtToken(token: string): void {
+        this.token = token;
+    }
 
     removeJwtToken(): void {
         this.token = null;

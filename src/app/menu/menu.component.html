@@ -3,18 +3,20 @@
     <button class="navbar-toggler" type="button" (click)="toggleNavbar()">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div id="navbar" class="navbar-collapse" [ngbCollapse]="navbarCollapsed" *ngIf="user">
+    <div id="navbar" class="navbar-collapse" [ngbCollapse]="navbarCollapsed" *ngIf="userEvents">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link" routerLink="/races">Races</a>
             </li>
         </ul>
-        <div class="nav-item navbar-text mr-2">
-            <span class="nav-item navbar-text mr-2">
+        <div class="nav-item navbar-text mr-2" *ngIf="userEvents |async as user" routerLink="/users/money/history">
+            <a class="nav-item navbar-text mr-2">
                 {{ user.login }}
+                <span class="fa fa-dollar"></span>
                 {{ user.money }}
-                <button type="button" class="btn btn-secondary" (click)="logout()">Log out</button>
-            </span>
+            </a>
         </div>
+        <a type="button" class="btn btn-secondary" (click)="logout($event)">Log out</a>
     </div>
 </nav>
+

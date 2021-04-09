@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
     credentials = { login: '', password: '' };
-    loginFailed: boolean = false;
+    loginFailed = false;
     @ViewChild(NgForm, { static: false }) credentialsForm?: NgForm;
 
     constructor(private userService: UserService, private router: Router) {}
